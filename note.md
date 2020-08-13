@@ -33,7 +33,11 @@
 # git
 - git status 查看当前工作区是否干净
 - git checkout -b login 创建一个分支
+- git checkout master 进入master这个分支
 - git branch 查看当前所有分支
+
+合并分支：
+    你要合并到哪一个分支，就必须要先切到这个分支里，然后再从这个分支主动合并其他分支
 
 # element-ui
 
