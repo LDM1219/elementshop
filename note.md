@@ -115,3 +115,7 @@ get方法会返回一个promise对象，为了简化promise操作，可以使用
     </el-table-column>
 这里是父组件user的作用域，
 但是想要使用子组件el-table-column的数据，所以要用到作用域插槽
+
+# 删除权限
+为了防止每次删除权限后的折叠框会收起来，不要重新请求页面，而是应该把删除后最新的数据赋值给权限的role.children = res.data;
+
