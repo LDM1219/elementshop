@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-      <el-breadcrumb-item>角色列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <breadcrumb :props-list="['权限管理','角色列表']"></breadcrumb>
 
     <!-- 卡片区域 -->
     <el-card>
@@ -105,8 +101,12 @@
 </template>
 
 <script>
+import Breadcrumb from "components/common/nav/Breadcrumb";
 export default {
   name: "Roles",
+  components: {
+    Breadcrumb
+  },
   data() {
     return {
       // 所有的角色数据

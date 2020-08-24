@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import axios from 'axios'
+import store from './store'
+import api from 'network/api.js'
 
 import './assets/css/global.css'
 
@@ -15,9 +17,10 @@ axios.interceptors.request.use(config => {
   return config
 })
 Vue.prototype.$http = axios
-
+Vue.prototype.$api = api
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
