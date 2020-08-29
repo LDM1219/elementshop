@@ -73,6 +73,8 @@
         :total="this.$store.state.total"
       ></el-pagination>
     </el-card>
+
+    <!-- 对话框 -->
     <add-dialog :addDialogVisible.sync="addDialogVisible"></add-dialog>
     <edit-dialog :editDialogVisible.sync="editDialogVisible" :editInfoId="editInfoId"></edit-dialog>
     <set-role-dialog :setRoleDialogVisible.sync="setRoleDialogVisible" :userInfo="setRoleInfo"></set-role-dialog>
@@ -173,6 +175,7 @@ export default {
         type: "warning"
       })
         .then(() => {
+          console.log(id);
           removeUserById(id).then(res => {
             if (res.meta.status !== 200) {
               return this.$message.error("删除用户失败");

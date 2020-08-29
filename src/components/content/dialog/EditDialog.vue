@@ -5,7 +5,7 @@
     width="50%"
     @close="editDialogClosed"
     :editDialogVisible="editDialogVisible"
-    @open="getUserInfo(getId)"
+    @open="getUserById(getId)"
   >
     <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
       <el-form-item label="用户名">
@@ -21,13 +21,13 @@
 
     <span slot="footer" class="dialog-footer">
       <el-button @click="cancelEditDialogVisible">取 消</el-button>
-      <el-button type="primary" @click="editUserInfo">确 定</el-button>
+      <el-button type="primary" @click="putEditUserInfo">确 定</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-import { getUserList, getUserInfo } from "network/users.js";
+import { getUserList, queryUserById, editUserInfo } from "network/users.js";
 export default {
   props: {
     editInfoId: {
@@ -90,32 +90,34 @@ export default {
     cancelEditDialogVisible() {
       this.$emit("update:editDialogVisible", false);
     },
-    editUserInfo() {
-      this.$refs.editFormRef.validate(async valid => {
+    putEditUserInfo() {
+      this.$refs.editFormRef.validate(valid => {
         if (!valid) return;
-        // 发起修改用户信息的数据请求
-        const { data: res } = await this.$http.put("users/" + this.editInfoId, {
-          email: this.editForm.email,
-          mobile: this.editForm.mobile
+        editUserInfo(
+          this.editInfoId,
+          this.editForm.email,
+          this.editForm.mobile
+        ).then(res => {
+          if (res.meta.status !== 200) {
+            return this.$message.error("更新用户信息失败");
+          }
+          this.$emit("update:editDialogVisible", false);
+          this.getUserList();
+          this.$message.success("更新用户信息成功");
         });
-        if (res.meta.status !== 200) {
-          return this.$message.error("更新用户信息失败");
-        }
-        this.$emit("update:editDialogVisible", false);
-        this.getUserList();
-        this.$message.success("更新用户信息成功");
       });
     },
-    getUserInfo(id) {
+    getUserById(id) {
       console.log("++++++");
-      getUserInfo("get", "users/" + id).then(res => {
-        console.log("++++++");
-        console.log(res);
+      queryUserById(id).then(res => {
+        if (res.meta.status !== 200) {
+          return this.$message.error("获取用户信息失败");
+        }
         this.editForm = res.data;
       });
     },
     getUserList() {
-      getUserList("get", "users", this.$store.state.queryInfo).then(res => {
+      getUserList().then(res => {
         if (res.meta.status !== 200)
           return this.$message.error("获取用户列表失败");
         this.$store.commit("getUserlist", res.data.users);

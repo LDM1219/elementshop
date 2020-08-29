@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getUserList, getUserInfo } from "network/users.js";
+import { getUserList, getRolesList, saveRoleInfo } from "network/users.js";
 export default {
   props: {
     userInfo: {
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     setRightDialogopened() {
-      getUserInfo("get", "roles").then(res => {
+      getRolesList().then(res => {
         if (res.meta.status !== 200) {
           return this.$message.error("获取角色列表失败");
         }
@@ -65,26 +65,21 @@ export default {
       this.selectedRoleId = "";
       this.$emit("update:setRoleDialogVisible", false);
     },
-    async saveRoleInfo() {
+    saveRoleInfo() {
       if (!this.selectedRoleId) {
         return this.$message.error("请选择要分配的角色");
       }
-      const { data: res } = await this.$http.put(
-        `users/${this.userInfo.id}/role`,
-        {
-          id: this.userInfo.id,
-          rid: this.selectedRoleId
+      saveRoleInfo(this.userInfo.id, this.selectedRoleId).then(res => {
+        if (res.meta.status !== 200) {
+          return this.$message.error("更新角色失败");
         }
-      );
-      if (res.meta.status !== 200) {
-        return this.$message.error("更新角色失败");
-      }
-      this.$message.success("更新角色成功");
-      this.getUserList();
-      this.$emit("update:setRoleDialogVisible", false);
+        this.$message.success("更新角色成功");
+        this.getUserList();
+        this.$emit("update:setRoleDialogVisible", false);
+      });
     },
     getUserList() {
-      getUserList("get", "users", this.$store.state.queryInfo).then(res => {
+      getUserList().then(res => {
         if (res.meta.status !== 200)
           return this.$message.error("获取用户列表失败");
         this.$store.commit("getUserlist", res.data.users);

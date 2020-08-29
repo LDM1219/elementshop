@@ -10,7 +10,9 @@ export default {
     },
     getQueryInfoQuery(state, query) {
         state.queryInfo.query = query
-    }
-
+    },
+    getRoleslist(state, data) {
+        state.roleslist = data
+    },
 
 }

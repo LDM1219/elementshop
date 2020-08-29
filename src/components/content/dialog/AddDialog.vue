@@ -25,14 +25,8 @@
 </template>
 
 <script>
-import { getUserList } from "network/users.js";
+import { getUserList, addUser } from "network/users.js";
 export default {
-  // props: {
-  //   addDialogVisible: {
-  //     default: false,
-  //     type: Boolean
-  //   }
-  // },
   props: ["addDialogVisible"],
   data() {
     // 验证邮箱的规则
@@ -92,37 +86,27 @@ export default {
       this.$emit("update:addDialogVisible", false);
     },
     addUser() {
-      this.$refs.addFormRef.validate(async valid => {
+      this.$refs.addFormRef.validate(valid => {
         if (!valid) return;
         // valid为true，可以发送网络请求添加新用户
-        const { data: res } = await this.$http.post("users", this.addForm);
-        if (res.meta.status != 201) {
-          this.$message.error("添加用户失败");
-        }
-        this.$message.success("添加用户成功");
-        // 隐藏添加用户对话框
-        this.$emit("update:addDialogVisible", false);
-        // 重新获取用户数据列表
-        this.getUserList();
+        addUser(this.addForm).then(res => {
+          if (res.meta.status != 201) {
+            this.$message.error("添加用户失败");
+          }
+          this.$message.success("添加用户成功");
+          // 隐藏添加用户对话框
+          this.$emit("update:addDialogVisible", false);
+          // 重新获取用户数据列表
+          this.getUserList();
+        });
       });
     },
     getUserList() {
       getUserList("get", "users", this.$store.state.queryInfo).then(res => {
         if (res.meta.status !== 200)
           return this.$message.error("获取用户列表失败");
-
-        // 注意！：通过props传递给子组件的属性，不能在子组件内部修改props中的属性值
-        // 错误  this.userlist = res.data.users;
-        // 错误  this.total = res.data.total;
-
-        // 使用双向绑定
-        // this.$emit("update:userlist", res.data.users);
-        // this.$emit("update:total", res.data.total);
-
-        console.log("-------");
         this.$store.commit("getUserlist", res.data.users);
         this.$store.commit("getTotal", res.data.total);
-        console.log(res);
       });
     }
   }

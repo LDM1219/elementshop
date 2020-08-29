@@ -5,6 +5,7 @@ import './plugins/element.js'
 import axios from 'axios'
 import store from './store'
 import api from 'network/api.js'
+import TreeTable from 'vue-table-with-tree-grid'
 
 import './assets/css/global.css'
 
@@ -18,7 +19,7 @@ axios.interceptors.request.use(config => {
 })
 Vue.prototype.$http = axios
 Vue.prototype.$api = api
-
+Vue.component('tree-table', TreeTable)
 new Vue({
   router,
   store,

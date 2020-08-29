@@ -1,18 +1,17 @@
 <template>
   <div>
-    <breadcrumb :props-list="['商品管理','商品分类']"></breadcrumb>
-    <cate-card></cate-card>
+    <breadcrumb :props-list="['商品管理','参数列表']"></breadcrumb>
+    <params-card></params-card>
   </div>
 </template>
 
 <script>
 import Breadcrumb from "components/common/nav/Breadcrumb.vue";
-import CateCard from "./CateCard.vue";
+import ParamsCard from "./ParamsCard.vue";
 export default {
-  name: "Cate",
   components: {
     Breadcrumb,
-    CateCard
+    ParamsCard
   }
 };
 </script>

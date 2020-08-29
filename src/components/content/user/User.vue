@@ -18,17 +18,6 @@ export default {
     this.getUserList();
   },
   methods: {
-    // getUserList() {
-    //   const queryInfo = this.$store.state.queryInfo;
-    //   console.log(queryInfo);
-    //   getUserList("get", "users", queryInfo).then(res => {
-    //     if (res.meta.status !== 200) {
-    //       return this.$message.error("获取用户列表失败");
-    //     }
-    //     this.$store.commit("getUserlist", res.data.users);
-    //     this.$store.commit("getTotal", res.data.total);
-    //   });
-    // }
     getUserList() {
       getUserList().then(res => {
         if (res.meta.status !== 200) {
