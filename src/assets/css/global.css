@@ -22,5 +22,16 @@ body,
 .el-pagination {
     margin-top: 15px;
     text-align: center;
+}
 
+.el-steps {
+    margin: 15px 0
+}
+
+.el-steps_title {
+    font-size: 14px;
+}
+
+.ql-editor {
+    min-height: 300px;
 }

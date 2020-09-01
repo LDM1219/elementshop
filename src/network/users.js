@@ -114,6 +114,20 @@ function removeParamsById(cateId, attr_id) {
 function putAttr(cateId, attr_id, params) {
     return instance.put('categories/' + cateId + '/attributes/' + attr_id, params)
 }
+
+// 获取商品列表
+function getGoodsList(params) {
+    return instance.get('goods', params)
+}
+
+// 删除商品
+function removeById(id) {
+    return instance.delete('goods/' + id)
+}
+// 添加商品
+function addGoods(params) {
+    return instance.post('goods/', params)
+}
 // 导出
 export {
     userStateChange,
@@ -136,6 +150,9 @@ export {
     getEditAttr,
     editParams,
     removeParamsById,
-    putAttr
+    putAttr,
+    getGoodsList,
+    removeById,
+    addGoods
 
 }
