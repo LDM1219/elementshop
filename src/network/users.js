@@ -128,6 +128,14 @@ function removeById(id) {
 function addGoods(params) {
     return instance.post('goods/', params)
 }
+// 获取订单列表
+function getOrderList(params) {
+    return instance.get('orders', params)
+}
+// 获取物流信息
+function getProgress() {
+    return instance.get('/kuaidi/804909574412544580')
+}
 // 导出
 export {
     userStateChange,
@@ -153,6 +161,8 @@ export {
     putAttr,
     getGoodsList,
     removeById,
-    addGoods
+    addGoods,
+    getOrderList,
+    getProgress
 
 }
