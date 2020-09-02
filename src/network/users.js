@@ -136,6 +136,10 @@ function getOrderList(params) {
 function getProgress() {
     return instance.get('/kuaidi/804909574412544580')
 }
+// 请求数据统计图的数据
+function getReports() {
+    return instance.get('reports/type/1')
+}
 // 导出
 export {
     userStateChange,
@@ -163,6 +167,7 @@ export {
     removeById,
     addGoods,
     getOrderList,
-    getProgress
+    getProgress,
+    getReports
 
 }
